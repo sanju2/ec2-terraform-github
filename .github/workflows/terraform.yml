@@ -1,23 +1,16 @@
 name: Terraform Apply
-on: [push]
+
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  terraform_apply:
+  terraform:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Install Terraform
-      env:
-            TERRAFORM_VERSION: "1.2.5"
-      run: |
-        tf_version=$TERRAFORM_VERSION
-        wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
-        unzip terraform_"$tf_version"_linux_amd64.zip
-        sudo mv terraform /usr/local/bin/
-
-    - name: Verify Terraform version
-      run: terraform --version
+    - name: Checkout
+      uses: actions/checkout@v3
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -25,15 +18,19 @@ jobs:
         # terraform_version: 0.13.0:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+
     - name: Terraform Init
+      id: init
       run: terraform init
 
-    - name: Terraform validation
-      run: terraform validate
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
 
     - name: Terraform apply
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
