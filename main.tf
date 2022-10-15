@@ -1,19 +1,23 @@
 terraform {
-  cloud {
-    organization = "hashicorp-terraform-learn"
-    workspaces {
-      name = "ec2-terraform-github"
-    }
-  }
-
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.16"
+      version = "3.26.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.0.1"
     }
   }
+  required_version = ">= 1.1.0"
 
-  required_version = ">= 1.2.0"
+  cloud {
+    organization = "hashicorp-terraform-learn"
+
+    workspaces {
+      name = "terraform-learn"
+    }
+  }
 }
 
 provider "aws" {
