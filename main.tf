@@ -1,11 +1,19 @@
 terraform {
-  backend "remote" {
+  cloud {
     organization = "hashicorp-terraform-learn"
     workspaces {
-      name = "terraform-learn"
+      name = "ec2-terraform-github"
     }
   }
 
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
+    }
+  }
+
+  required_version = ">= 1.2.0"
 }
 
 provider "aws" {
