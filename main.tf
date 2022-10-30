@@ -1,10 +1,10 @@
 terraform {
-  backend "remote" {
-    organization = "hashicorp-terraform-learn"
-    workspaces {
-      name = "terraform-learn"
-    }
-  }
+  # backend "remote" {
+  #   organization = "hashicorp-terraform-learn"
+  #   workspaces {
+  #     name = "terraform-learn"
+  #   }
+  # }
 
   required_providers {
     aws = {
