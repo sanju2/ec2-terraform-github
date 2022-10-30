@@ -1,2 +1,7 @@
-# ec2-terraform-github
-EC2 Instance Provision usingTerraform with GitHub Actions
+### EC2 Instance Provision using Terraform with GitHub Actions
+
+### steps
+
+- git add .
+- git commit -m "commit message"
+- git push
